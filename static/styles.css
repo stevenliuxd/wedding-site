@@ -151,15 +151,7 @@ img { max-width: 100%; display: block; }
   font-size: .9rem;
   text-transform: uppercase;
 }
-.hero-meta span { display: inline-block; margin: 0 .9rem; }
-.hero-rule {
-  display: inline-block;
-  width: 60px;
-  height: 1px;
-  background: #f0e7d3;
-  vertical-align: middle;
-  margin: 0 .4rem;
-}
+.hero-meta span { display: block; margin: .4rem 0; }
 
 /* Sections */
 section {
@@ -381,6 +373,16 @@ section.alt { background: var(--cream); }
   color: #fff;
   transform: translateY(-1px);
 }
+.form-page .btn {
+  background: #915F6D;
+  border-color: #915F6D;
+  color: var(--ivory);
+}
+.form-page .btn:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #fff;
+}
 .btn-outline {
   background: transparent;
   color: var(--sage-dark);
@@ -402,6 +404,7 @@ section.alt { background: var(--cream); }
   background: var(--cream);
   border-color: var(--cream);
   color: #915F6D;
+  font-weight: 700;
 }
 .rsvp-cta .btn:hover {
   background: var(--gold);
