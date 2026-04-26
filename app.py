@@ -57,6 +57,16 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/rehearsal')
+def rehearsal():
+    return render_template('rehearsal.html')
+
+
+@app.route('/weddingparty')
+def wedding_party():
+    return render_template('wedding_party.html')
+
+
 def parse_guests(form):
     # Form fields look like: guests[0][full_name], guests[1][attending], etc.
     pattern = re.compile(r'^guests\[(\d+)\]\[([a-z_]+)\]$')

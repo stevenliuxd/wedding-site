@@ -344,6 +344,14 @@ section.alt { background: var(--cream); }
   align-items: baseline;
 }
 .program-row:last-child { border-bottom: none; }
+.program-row.highlight {
+  background: #915F6D;
+  border-radius: 4px;
+  padding: 1.2rem 1rem;
+  border-bottom-color: transparent;
+}
+.program-row.highlight .program-time,
+.program-row.highlight .program-event { color: #fff; }
 .program-time {
   font-family: 'Cinzel', serif;
   letter-spacing: .12em;
@@ -448,6 +456,7 @@ footer a { color: var(--sage-dark); border-bottom: none; }
   box-shadow: var(--shadow);
   border-radius: 4px;
 }
+.form-card + .form-card { margin-top: 1.5rem; }
 .form-card h1 {
   text-align: center;
   font-size: clamp(1.8rem, 4vw, 2.6rem);
