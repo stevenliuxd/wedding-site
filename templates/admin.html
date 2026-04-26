@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSVP Responses · Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="admin-page">
+
+<div style="max-width: 1200px; margin: 0 auto;">
+  <div class="eyebrow">Admin</div>
+  <h2 style="margin-bottom: 1.5rem;">RSVP Responses</h2>
+</div>
+
+<div class="admin-summary">
+  <div class="admin-stat"><span class="num">{{ stats.submissions }}</span><span class="label">Submissions</span></div>
+  <div class="admin-stat"><span class="num">{{ stats.attending }}</span><span class="label">Attending</span></div>
+  <div class="admin-stat"><span class="num">{{ stats.declined }}</span><span class="label">Declined</span></div>
+  <div class="admin-stat"><span class="num">{{ stats.chicken }}</span><span class="label">Chicken</span></div>
+  <div class="admin-stat"><span class="num">{{ stats.beef }}</span><span class="label">Beef</span></div>
+</div>
+
+<div class="admin-actions">
+  <a class="btn btn-outline" href="{{ url_for('admin_export') }}">Download CSV</a>
+</div>
+
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>Submitted</th>
+      <th>Email</th>
+      <th>Guest</th>
+      <th>Attending</th>
+      <th>Starter</th>
+      <th>Main</th>
+      <th>Dietary</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in rows %}
+    <tr>
+      <td>{{ row.submitted_at }}</td>
+      <td>{{ row.primary_email }}</td>
+      <td>{{ row.full_name }}</td>
+      <td>{{ row.attending }}</td>
+      <td>{{ row.starter or '' }}</td>
+      <td>{{ row.main_course or '' }}</td>
+      <td>{{ row.dietary or '' }}</td>
+      <td>{{ row.message or '' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="8" style="text-align: center; padding: 2rem; color: var(--muted);">No responses yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSVP · Dylan &amp; Steven</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="form-page">
+
+<div class="form-card">
+  <div style="text-align: center;">
+    <div class="eyebrow">Dylan &amp; Steven</div>
+    <h1>Wedding RSVP</h1>
+    <p class="form-intro">
+      August 8, 2026 &middot; The Ridge, Okotoks<br>
+      <strong>Please RSVP by July 1, 2026</strong>
+    </p>
+  </div>
+
+  {% if error %}
+    <div class="form-error">{{ error }}</div>
+  {% endif %}
+
+  <form method="POST" action="{{ url_for('rsvp') }}" novalidate>
+    <div class="field">
+      <label for="primary_email">Your email <small style="text-transform:none; letter-spacing: normal; color: var(--muted);">(so we can confirm)</small></label>
+      <input type="email" id="primary_email" name="primary_email" required>
+    </div>
+
+    <div id="guest-list">
+      <div class="guest-block">
+        <div class="guest-header">
+          <div class="guest-title">Guest 1</div>
+          <button type="button" class="guest-remove" style="display:none;">Remove</button>
+        </div>
+
+        <div class="field">
+          <label data-for="full_name">Full Name</label>
+          <input type="text" data-name="full_name" required>
+        </div>
+
+        <div class="field">
+          <label>Will you be attending?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" data-group="attending" value="yes" required>
+              <span class="radio-option-text">
+                <strong>Accepts with pleasure</strong>
+                <small>Can't wait to celebrate with you!</small>
+              </span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" data-group="attending" value="no">
+              <span class="radio-option-text">
+                <strong>Declines with regret</strong>
+                <small>Will be missed.</small>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="menu-section">
+          <div class="field">
+            <label>Choice of Starter</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" data-group="starter" value="Canadian Lobster Bisque, Saffron Cream, Brioche Croutons">
+                <span class="radio-option-text">
+                  <strong>Canadian Lobster Bisque</strong>
+                  <small>Saffron cream, brioche croutons</small>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Choice of Main Course</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" data-group="main_course" value="Pan Seared Marinated Chicken Supreme, Duck fat Smashed Potatoes, Asparagus, Chimichurri Sauce">
+                <span class="radio-option-text">
+                  <strong>Pan Seared Chicken Supreme</strong>
+                  <small>Duck fat smashed potatoes, asparagus, chimichurri sauce</small>
+                </span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" data-group="main_course" value="Slow Roasted Alberta Beef Striploin, Confit Baby Potatoes, Black Garlic Haricots Verts, Red wine Sauce">
+                <span class="radio-option-text">
+                  <strong>Slow Roasted Alberta Beef Striploin</strong>
+                  <small>Confit baby potatoes, black garlic haricots verts, red wine sauce</small>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label data-for="dietary">Food allergies or restrictions <small style="text-transform:none; letter-spacing: normal; color: var(--muted);">(vegetarian, vegan, etc.)</small></label>
+            <textarea data-name="dietary" placeholder="Optional"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <template id="guest-template">
+      <div class="guest-block">
+        <div class="guest-header">
+          <div class="guest-title">Guest</div>
+          <button type="button" class="guest-remove">Remove</button>
+        </div>
+        <div class="field">
+          <label data-for="full_name">Full Name</label>
+          <input type="text" data-name="full_name" required>
+        </div>
+        <div class="field">
+          <label>Will they be attending?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" data-group="attending" value="yes" required>
+              <span class="radio-option-text">
+                <strong>Accepts with pleasure</strong>
+                <small>Can't wait to celebrate with you!</small>
+              </span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" data-group="attending" value="no">
+              <span class="radio-option-text">
+                <strong>Declines with regret</strong>
+                <small>Will be missed.</small>
+              </span>
+            </label>
+          </div>
+        </div>
+        <div class="menu-section">
+          <div class="field">
+            <label>Choice of Starter</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" data-group="starter" value="Canadian Lobster Bisque, Saffron Cream, Brioche Croutons">
+                <span class="radio-option-text">
+                  <strong>Canadian Lobster Bisque</strong>
+                  <small>Saffron cream, brioche croutons</small>
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <label>Choice of Main Course</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" data-group="main_course" value="Pan Seared Marinated Chicken Supreme, Duck fat Smashed Potatoes, Asparagus, Chimichurri Sauce">
+                <span class="radio-option-text">
+                  <strong>Pan Seared Chicken Supreme</strong>
+                  <small>Duck fat smashed potatoes, asparagus, chimichurri sauce</small>
+                </span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" data-group="main_course" value="Slow Roasted Alberta Beef Striploin, Confit Baby Potatoes, Black Garlic Haricots Verts, Red wine Sauce">
+                <span class="radio-option-text">
+                  <strong>Slow Roasted Alberta Beef Striploin</strong>
+                  <small>Confit baby potatoes, black garlic haricots verts, red wine sauce</small>
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <label data-for="dietary">Food allergies or restrictions</label>
+            <textarea data-name="dietary" placeholder="Optional"></textarea>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <div class="form-actions">
+      <button type="button" id="add-guest" class="add-guest-btn">+ Add Next Guest</button>
+    </div>
+
+    <div class="field" style="margin-top: 1.5rem;">
+      <label for="message">Message to the couple <small style="text-transform:none; letter-spacing: normal; color: var(--muted);">(optional)</small></label>
+      <textarea id="message" name="message" placeholder="A note, a song request, anything you'd like to share..."></textarea>
+    </div>
+
+    <div style="text-align: center; margin-top: 2rem;">
+      <button type="submit" class="btn">Submit RSVP</button>
+    </div>
+
+    <p style="text-align: center; margin-top: 2rem; font-size: .85rem;">
+      <a href="{{ url_for('index') }}" style="color: var(--muted); border: none;">&larr; Back to wedding site</a>
+    </p>
+  </form>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

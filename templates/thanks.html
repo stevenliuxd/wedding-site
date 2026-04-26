@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You · Dylan &amp; Steven</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="form-page">
+
+<div class="form-card thanks-card">
+  <div class="eyebrow">Your Response Has Been Recorded</div>
+  <h1>Thank You for RSVPing!</h1>
+  <div class="divider" style="margin: 1.5rem auto;">&#10047;</div>
+  <p>We're so grateful you took the time to let us know. We can't wait to celebrate with you on August 8, 2026 at The Ridge Okotoks.</p>
+  <p style="margin-top: 2rem;">If anything changes, or if you have questions, please email us at <a href="mailto:dylanandsteven@outlook.com">dylanandsteven@outlook.com</a>.</p>
+  <div style="margin-top: 2.5rem;">
+    <a href="{{ url_for('index') }}" class="btn btn-outline">Back to the Wedding Site</a>
+  </div>
+</div>
+
+</body>
+</html>
