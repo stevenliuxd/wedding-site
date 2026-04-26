@@ -28,6 +28,7 @@ MAIN_CHOICES = {
     'Slow Roasted Alberta Beef Striploin, Confit Baby Potatoes, Black Garlic Haricots Verts, Red wine Sauce',
 }
 app = Flask(__name__)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 
 def get_db():

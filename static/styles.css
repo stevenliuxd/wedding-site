@@ -187,8 +187,11 @@ section.alt { background: var(--cream); }
   padding: 4rem 1.5rem;
   text-align: center;
 }
-.countdown .eyebrow { color: #e9dfc6; }
-.countdown h2 { color: var(--ivory); margin-bottom: 2rem; }
+.countdown .eyebrow {
+  color: #e9dfc6;
+  font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+  margin-bottom: 2rem;
+}
 .countdown-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -229,7 +232,7 @@ section.alt { background: var(--cream); }
   height: auto;
   margin: 0 auto;
   display: block;
-  border-radius: 2px;
+  border-radius: 14px;
   box-shadow: var(--shadow);
 }
 @media (max-width: 800px) {
@@ -270,7 +273,7 @@ section.alt { background: var(--cream); }
   max-width: 420px;
   display: block;
   box-shadow: var(--shadow);
-  border-radius: 2px;
+  border-radius: 14px;
 }
 .event-text { max-width: 460px; }
 .event-row.reverse .event-text { margin-left: auto; }
@@ -317,7 +320,7 @@ section.alt { background: var(--cream); }
   max-width: 380px;
   height: auto;
   display: block;
-  border-radius: 2px;
+  border-radius: 14px;
   box-shadow: var(--shadow);
 }
 @media (max-width: 800px) {
@@ -404,7 +407,6 @@ section.alt { background: var(--cream); }
   background: var(--cream);
   border-color: var(--cream);
   color: #915F6D;
-  font-weight: 700;
 }
 .rsvp-cta .btn:hover {
   background: var(--gold);
@@ -537,8 +539,12 @@ footer a { color: var(--sage-dark); border-bottom: none; }
   background: #fff;
   transition: border-color .15s, background .15s;
 }
-.radio-option:hover { border-color: var(--sage); }
-.radio-option input { margin-top: .25rem; accent-color: var(--sage-dark); }
+.radio-option:hover { border-color: #915F6D; }
+.radio-option:has(input:checked) {
+  border-color: #915F6D;
+  background: rgba(145, 95, 109, 0.08);
+}
+.radio-option input { margin-top: .25rem; accent-color: #915F6D; }
 .radio-option-text { flex: 1; }
 .radio-option-text strong {
   display: block;
@@ -562,7 +568,7 @@ footer a { color: var(--sage-dark); border-bottom: none; }
 .add-guest-btn {
   background: transparent;
   border: 1px dashed var(--sage);
-  color: var(--sage-dark);
+  color: var(--charcoal);
   font-family: 'Cinzel', serif;
   letter-spacing: .15em;
   text-transform: uppercase;
@@ -572,7 +578,7 @@ footer a { color: var(--sage-dark); border-bottom: none; }
   border-radius: 2px;
   transition: background .2s, color .2s;
 }
-.add-guest-btn:hover { background: var(--sage); color: #fff; }
+.add-guest-btn:hover { background: #915F6D; border-color: #915F6D; color: #fff; }
 .add-guest-btn:disabled { opacity: .4; cursor: not-allowed; }
 
 .form-error {
