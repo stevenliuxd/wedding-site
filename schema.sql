@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS rsvps (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
     submitted_at    TEXT    NOT NULL DEFAULT (datetime('now')),
-    primary_email   TEXT    NOT NULL,
     message         TEXT,
     ip              TEXT,
     user_agent      TEXT

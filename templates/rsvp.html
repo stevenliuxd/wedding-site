@@ -26,11 +26,6 @@
   {% endif %}
 
   <form method="POST" action="{{ url_for('rsvp') }}" novalidate>
-    <div class="field">
-      <label for="primary_email">Your email <small style="text-transform:none; letter-spacing: normal; color: var(--muted);">(so we can confirm)</small></label>
-      <input type="email" id="primary_email" name="primary_email" required>
-    </div>
-
     <div id="guest-list">
       <div class="guest-block">
         <div class="guest-header">
@@ -72,6 +67,13 @@
                 <span class="radio-option-text">
                   <strong>Canadian Lobster Bisque</strong>
                   <small>Saffron cream, brioche croutons</small>
+                </span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" data-group="starter" value="Roasted Beets &amp; Apple Salad, Honey Goat Cheese, Candied Pecans, Balsamic Dressing">
+                <span class="radio-option-text">
+                  <strong>Roasted Beets &amp; Apple Salad</strong>
+                  <small>Honey goat cheese, candied pecans, balsamic dressing</small>
                 </span>
               </label>
             </div>
@@ -143,6 +145,13 @@
                 <span class="radio-option-text">
                   <strong>Canadian Lobster Bisque</strong>
                   <small>Saffron cream, brioche croutons</small>
+                </span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" data-group="starter" value="Roasted Beets &amp; Apple Salad, Honey Goat Cheese, Candied Pecans, Balsamic Dressing">
+                <span class="radio-option-text">
+                  <strong>Roasted Beets &amp; Apple Salad</strong>
+                  <small>Honey goat cheese, candied pecans, balsamic dressing</small>
                 </span>
               </label>
             </div>

@@ -32,7 +32,6 @@
   <thead>
     <tr>
       <th>Submitted</th>
-      <th>Email</th>
       <th>Guest</th>
       <th>Attending</th>
       <th>Starter</th>
@@ -45,7 +44,6 @@
     {% for row in rows %}
     <tr>
       <td>{{ row.submitted_at }}</td>
-      <td>{{ row.primary_email }}</td>
       <td>{{ row.full_name }}</td>
       <td>{{ row.attending }}</td>
       <td>{{ row.starter or '' }}</td>
@@ -54,7 +52,7 @@
       <td>{{ row.message or '' }}</td>
     </tr>
     {% else %}
-    <tr><td colspan="8" style="text-align: center; padding: 2rem; color: var(--muted);">No responses yet.</td></tr>
+    <tr><td colspan="7" style="text-align: center; padding: 2rem; color: var(--muted);">No responses yet.</td></tr>
     {% endfor %}
   </tbody>
 </table>

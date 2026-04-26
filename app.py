@@ -21,13 +21,12 @@ ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
 ATTENDING_VALUES = {'yes', 'no'}
 STARTER_CHOICES = {
     'Canadian Lobster Bisque, Saffron Cream, Brioche Croutons',
+    'Roasted Beets & Apple Salad, Honey Goat Cheese, Candied Pecans, Balsamic Dressing',
 }
 MAIN_CHOICES = {
     'Pan Seared Marinated Chicken Supreme, Duck fat Smashed Potatoes, Asparagus, Chimichurri Sauce',
     'Slow Roasted Alberta Beef Striploin, Confit Baby Potatoes, Black Garlic Haricots Verts, Red wine Sauce',
 }
-EMAIL_RE = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
-
 app = Flask(__name__)
 
 
@@ -76,11 +75,7 @@ def rsvp():
     if request.method == 'GET':
         return render_template('rsvp.html')
 
-    primary_email = request.form.get('primary_email', '').strip()
     message = request.form.get('message', '').strip() or None
-
-    if not EMAIL_RE.match(primary_email):
-        return render_template('rsvp.html', error='Please enter a valid email address.'), 400
 
     guests = parse_guests(request.form)
     if not guests:
@@ -114,8 +109,8 @@ def rsvp():
 
     db = get_db()
     cur = db.execute(
-        'INSERT INTO rsvps (primary_email, message, ip, user_agent) VALUES (?, ?, ?, ?)',
-        (primary_email, message, request.remote_addr, request.headers.get('User-Agent', '')[:500]),
+        'INSERT INTO rsvps (message, ip, user_agent) VALUES (?, ?, ?)',
+        (message, request.remote_addr, request.headers.get('User-Agent', '')[:500]),
     )
     rsvp_id = cur.lastrowid
     db.executemany(
@@ -156,7 +151,7 @@ def require_admin(view):
 def admin():
     db = get_db()
     rows = db.execute(
-        'SELECT r.submitted_at, r.primary_email, r.message, '
+        'SELECT r.submitted_at, r.message, '
         '       g.full_name, g.attending, g.starter, g.main_course, g.dietary '
         'FROM rsvps r JOIN guests g ON g.rsvp_id = r.id '
         'ORDER BY r.submitted_at DESC, g.id ASC'
@@ -176,17 +171,17 @@ def admin():
 def admin_export():
     db = get_db()
     rows = db.execute(
-        'SELECT r.submitted_at, r.primary_email, r.message, '
+        'SELECT r.submitted_at, r.message, '
         '       g.full_name, g.attending, g.starter, g.main_course, g.dietary '
         'FROM rsvps r JOIN guests g ON g.rsvp_id = r.id '
         'ORDER BY r.submitted_at DESC, g.id ASC'
     ).fetchall()
     buf = io.StringIO()
     writer = csv.writer(buf)
-    writer.writerow(['submitted_at', 'primary_email', 'guest_name', 'attending',
+    writer.writerow(['submitted_at', 'guest_name', 'attending',
                      'starter', 'main_course', 'dietary', 'message'])
     for r in rows:
-        writer.writerow([r['submitted_at'], r['primary_email'], r['full_name'], r['attending'],
+        writer.writerow([r['submitted_at'], r['full_name'], r['attending'],
                          r['starter'] or '', r['main_course'] or '', r['dietary'] or '',
                          r['message'] or ''])
     return Response(
