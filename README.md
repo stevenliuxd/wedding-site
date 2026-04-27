@@ -1,6 +1,6 @@
 # Dylan & Steven — Wedding Website
 
-A small Flask + SQLite site for the wedding on **August 8, 2026** at **The Ridge, Okotoks**.
+A small Flask + SQLite website for our lovely wedding.
 
 ## Layout
 
@@ -22,19 +22,7 @@ A small Flask + SQLite site for the wedding on **August 8, 2026** at **The Ridge
 
 The DB lives at `rsvps.db` next to `app.py` (override with `RSVP_DB`).
 
-## Local development (any machine with Python 3.10+)
-
-```bash
-python3 -m venv venv
-source venv/bin/activate            # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-export ADMIN_PASSWORD='change-me'   # required to view /admin
-python app.py
-```
-
-Open http://localhost:5000 — the DB initializes itself the first time you run.
-
-## Deploy on Ubuntu 24.04
+## Deployment
 
 ### 1. Install system packages
 
