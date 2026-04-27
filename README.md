@@ -40,25 +40,28 @@ Open http://localhost:5000 — the DB initializes itself the first time you run.
 
 ```bash
 sudo apt update
-sudo apt install -y python3-venv python3-pip nginx
+sudo apt install -y python3-venv python3-pip caddy
 ```
 
 ### 2. Put the code somewhere stable
 
+The live deployment lives at `/home/steven/code/wedding-site`. Adjust the paths below if you put it elsewhere.
+
 ```bash
-sudo mkdir -p /srv/wedding
-sudo chown "$USER":"$USER" /srv/wedding
-# copy this directory's contents to /srv/wedding
+mkdir -p ~/code
+git clone <repo-url> ~/code/wedding-site
 ```
 
 ### 3. Create venv and initialize the DB
 
 ```bash
-cd /srv/wedding
+cd ~/code/wedding-site
 python3 -m venv venv
 ./venv/bin/pip install -r requirements.txt
 ./venv/bin/python -c "from app import init_db; init_db()"
 ```
+
+This creates `rsvps.db` next to `app.py`.
 
 ### 4. Run as a systemd service
 
@@ -70,13 +73,13 @@ Description=Dylan & Steven wedding site
 After=network.target
 
 [Service]
-User=www-data
-Group=www-data
-WorkingDirectory=/srv/wedding
+User=steven
+Group=steven
+WorkingDirectory=/home/steven/code/wedding-site
 Environment="ADMIN_USER=admin"
 Environment="ADMIN_PASSWORD=REPLACE_WITH_LONG_RANDOM_STRING"
-Environment="RSVP_DB=/srv/wedding/rsvps.db"
-ExecStart=/srv/wedding/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:5000 app:app
+Environment="RSVP_DB=/home/steven/code/wedding-site/rsvps.db"
+ExecStart=/home/steven/code/wedding-site/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:5000 app:app
 Restart=on-failure
 RestartSec=3
 
@@ -85,49 +88,32 @@ WantedBy=multi-user.target
 ```
 
 ```bash
-sudo chown -R www-data:www-data /srv/wedding
 sudo systemctl daemon-reload
 sudo systemctl enable --now wedding
 sudo systemctl status wedding
 ```
 
-### 5. Reverse proxy with nginx + HTTPS
+The service runs as `steven` so the gunicorn process can read/write the DB without extra ownership changes.
 
-`/etc/nginx/sites-available/wedding`:
+### 5. Reverse proxy with Caddy + HTTPS
 
-```nginx
-server {
-    listen 80;
-    server_name your-domain.example;
+Caddy handles TLS automatically (Let's Encrypt). Edit `/etc/caddy/Caddyfile`:
 
-    client_max_body_size 1m;
+```
+dylanandsteven.ca, www.dylanandsteven.ca {
+    reverse_proxy 127.0.0.1:5000
+}
 
-    location / {
-        proxy_pass http://127.0.0.1:5000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
+dylanandsteven.ddns.net {
+    reverse_proxy 127.0.0.1:5000
 }
 ```
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/wedding /etc/nginx/sites-enabled/
-sudo nginx -t && sudo systemctl reload nginx
-
-# Free TLS with Let's Encrypt
-sudo apt install -y certbot python3-certbot-nginx
-sudo certbot --nginx -d your-domain.example
+sudo systemctl reload caddy
 ```
 
-If you'd rather skip nginx, **Caddy** does HTTPS automatically:
-
-```
-your-domain.example {
-    reverse_proxy 127.0.0.1:5000
-}
-```
+Each hostname listed in the Caddyfile needs to resolve to this server before Caddy can issue a certificate for it.
 
 ## Admin
 
@@ -138,7 +124,7 @@ Visit `/admin` and authenticate with `ADMIN_USER` / `ADMIN_PASSWORD` from the sy
 The whole database is one file. Quick cron backup:
 
 ```bash
-0 3 * * * cp /srv/wedding/rsvps.db /srv/wedding/backups/rsvps-$(date +\%F).db
+0 3 * * * cp /home/steven/code/wedding-site/rsvps.db /home/steven/code/wedding-site/backups/rsvps-$(date +\%F).db
 ```
 
 ## Tweaking content
