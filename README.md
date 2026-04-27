@@ -109,11 +109,28 @@ Visit `/admin` and authenticate with `ADMIN_USER` / `ADMIN_PASSWORD` from the sy
 
 ## Backups
 
-The whole database is one file. Quick cron backup:
+`scripts/backup-db.sh` runs nightly via cron and ships a compressed snapshot of `rsvps.db` to the NAS at `/mnt/nas-steven/Backups/wedding_site_bk/`.
+
+The script uses `sqlite3 .backup` (safe to run while the site is serving traffic) into a local tempdir, gzips, then copies the `.gz` to the NAS — going direct to CIFS doesn't work because SMB can't satisfy SQLite's file locking.
+
+Crontab entry:
+
+```
+0 2 * * * /home/steven/code/wedding-site/scripts/backup-db.sh >> /home/steven/code/wedding-site/logs/backup-db.log 2>&1
+```
+
+- **Output**: `rsvps_YYYYMMDD_HHMMSS.db.gz` on the NAS
+- **Retention**: 365 days, older `.gz` files auto-pruned (tweak `RETENTION_DAYS` in the script)
+- **Log**: `logs/backup-db.log`
+- **Safety**: aborts if the NAS isn't mounted at `/mnt/nas-steven`, so it won't silently write into an empty stub directory
+
+Restore:
 
 ```bash
-0 3 * * * cp /home/steven/code/wedding-site/rsvps.db /home/steven/code/wedding-site/backups/rsvps-$(date +\%F).db
+gunzip -c /mnt/nas-steven/Backups/wedding_site_bk/rsvps_YYYYMMDD_HHMMSS.db.gz > rsvps.db
 ```
+
+Run `sudo systemctl stop wedding` first if the site is live, then start it again after replacing the file.
 
 ## Tweaking content
 
