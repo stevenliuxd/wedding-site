@@ -162,7 +162,7 @@ def require_admin(view):
 def admin():
     db = get_db()
     rows = db.execute(
-        'SELECT r.submitted_at, r.message, '
+        'SELECT r.id AS rsvp_id, r.submitted_at, r.message, '
         '       g.full_name, g.attending, g.starter, g.main_course, g.dietary '
         'FROM rsvps r JOIN guests g ON g.rsvp_id = r.id '
         'ORDER BY r.submitted_at DESC, g.id ASC'
@@ -175,6 +175,15 @@ def admin():
         'beef': db.execute("SELECT COUNT(*) FROM guests WHERE main_course LIKE 'Slow Roasted%'").fetchone()[0],
     }
     return render_template('admin.html', rows=rows, stats=stats)
+
+
+@app.route('/admin/rsvps/<int:rsvp_id>/delete', methods=['POST'])
+@require_admin
+def admin_delete_rsvp(rsvp_id):
+    db = get_db()
+    db.execute('DELETE FROM rsvps WHERE id = ?', (rsvp_id,))
+    db.commit()
+    return redirect(url_for('admin'))
 
 
 @app.route('/admin/export.csv')

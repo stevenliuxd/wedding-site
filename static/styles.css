@@ -182,7 +182,7 @@ section.alt { background: var(--cream); }
 
 /* Countdown */
 .countdown {
-  background: #915F6D;
+  background: #8B4D52;
   color: var(--ivory);
   padding: 4rem 1.5rem;
   text-align: center;
@@ -345,7 +345,7 @@ section.alt { background: var(--cream); }
 }
 .program-row:last-child { border-bottom: none; }
 .program-row.highlight {
-  background: #915F6D;
+  background: #8B4D52;
   border-radius: 4px;
   padding: 1.2rem 1rem;
   border-bottom-color: transparent;
@@ -385,8 +385,8 @@ section.alt { background: var(--cream); }
   transform: translateY(-1px);
 }
 .form-page .btn {
-  background: #915F6D;
-  border-color: #915F6D;
+  background: #8B4D52;
+  border-color: #8B4D52;
   color: var(--ivory);
 }
 .form-page .btn:hover {
@@ -403,7 +403,7 @@ section.alt { background: var(--cream); }
 /* RSVP CTA section */
 .rsvp-cta {
   text-align: center;
-  background: #915F6D;
+  background: #8B4D52;
   color: var(--ivory);
   padding: 6rem 1.5rem;
 }
@@ -414,7 +414,7 @@ section.alt { background: var(--cream); }
   margin-top: 1rem;
   background: var(--cream);
   border-color: var(--cream);
-  color: #915F6D;
+  color: #8B4D52;
 }
 .rsvp-cta .btn:hover {
   background: var(--gold);
@@ -548,12 +548,12 @@ footer a { color: var(--sage-dark); border-bottom: none; }
   background: #fff;
   transition: border-color .15s, background .15s;
 }
-.radio-option:hover { border-color: #915F6D; }
+.radio-option:hover { border-color: #8B4D52; }
 .radio-option:has(input:checked) {
-  border-color: #915F6D;
+  border-color: #8B4D52;
   background: rgba(145, 95, 109, 0.08);
 }
-.radio-option input { margin-top: .25rem; accent-color: #915F6D; }
+.radio-option input { margin-top: .25rem; accent-color: #8B4D52; }
 .radio-option-text { flex: 1; }
 .radio-option-text strong {
   display: block;
@@ -587,7 +587,7 @@ footer a { color: var(--sage-dark); border-bottom: none; }
   border-radius: 2px;
   transition: background .2s, color .2s;
 }
-.add-guest-btn:hover { background: #915F6D; border-color: #915F6D; color: #fff; }
+.add-guest-btn:hover { background: #8B4D52; border-color: #8B4D52; color: #fff; }
 .add-guest-btn:disabled { opacity: .4; cursor: not-allowed; }
 
 .form-error {
