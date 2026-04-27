@@ -40,7 +40,7 @@ h3 { font-size: 1.2rem; letter-spacing: 0.16em; text-transform: uppercase; }
 
 p { margin: 0 0 1em; }
 
-a { color: var(--sage-dark); text-decoration: none; border-bottom: 1px solid var(--rule); transition: color .2s, border-color .2s; }
+a { color: #8B4D52; text-decoration: none; border-bottom: 1px solid var(--rule); transition: color .2s, border-color .2s; }
 a:hover { color: var(--gold); border-color: var(--gold); }
 
 img { max-width: 100%; display: block; }
@@ -444,7 +444,7 @@ footer {
   font-size: .85rem;
   letter-spacing: .1em;
 }
-footer a { color: var(--sage-dark); border-bottom: none; }
+footer a { color: #8B4D52; border-bottom: none; }
 
 /* RSVP form page */
 .form-page {
