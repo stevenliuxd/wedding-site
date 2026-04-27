@@ -396,9 +396,14 @@ section.alt { background: var(--cream); }
 }
 .btn-outline {
   background: transparent;
-  color: var(--sage-dark);
+  border-color: #8B4D52;
+  color: #8B4D52;
 }
-.btn-outline:hover { color: #fff; }
+.btn-outline:hover {
+  background: #8B4D52;
+  border-color: #8B4D52;
+  color: #fff;
+}
 
 /* RSVP CTA section */
 .rsvp-cta {
@@ -528,8 +533,8 @@ footer a { color: var(--sage-dark); border-bottom: none; }
 }
 .field input:focus, .field textarea:focus, .field select:focus {
   outline: none;
-  border-color: var(--sage);
-  box-shadow: 0 0 0 3px rgba(108, 122, 90, 0.12);
+  border-color: #8B4D52;
+  box-shadow: 0 0 0 3px rgba(139, 77, 82, 0.15);
 }
 .field textarea { min-height: 90px; resize: vertical; }
 
@@ -637,6 +642,12 @@ footer a { color: var(--sage-dark); border-bottom: none; }
   text-transform: uppercase;
   font-size: .75rem;
   color: var(--charcoal);
+}
+.admin-table tr.multi-guest > td {
+  background: rgba(139, 77, 82, 0.08);
+}
+.admin-table tr.multi-guest > td:first-child {
+  box-shadow: inset 3px 0 0 #8B4D52;
 }
 .admin-summary {
   max-width: 1200px;

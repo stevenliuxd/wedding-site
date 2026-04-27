@@ -4,12 +4,16 @@ import os
 import re
 import secrets
 import sqlite3
+from datetime import datetime, timezone
 from functools import wraps
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from flask import (
     Flask, Response, abort, g, redirect, render_template, request, url_for,
 )
+
+MOUNTAIN_TZ = ZoneInfo('America/Edmonton')
 
 BASE_DIR = Path(__file__).parent
 DB_PATH = Path(os.environ.get('RSVP_DB', BASE_DIR / 'rsvps.db'))
@@ -29,6 +33,14 @@ MAIN_CHOICES = {
 }
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
+
+
+@app.template_filter('mountain_time')
+def mountain_time(utc_str):
+    if not utc_str:
+        return ''
+    dt = datetime.fromisoformat(utc_str).replace(tzinfo=timezone.utc)
+    return dt.astimezone(MOUNTAIN_TZ).strftime('%Y-%m-%d %H:%M %Z')
 
 
 def get_db():
@@ -165,16 +177,23 @@ def admin():
         'SELECT r.id AS rsvp_id, r.submitted_at, r.message, '
         '       g.full_name, g.attending, g.starter, g.main_course, g.dietary '
         'FROM rsvps r JOIN guests g ON g.rsvp_id = r.id '
-        'ORDER BY r.submitted_at DESC, g.id ASC'
+        'ORDER BY r.submitted_at DESC, r.id DESC, g.id ASC'
     ).fetchall()
+    rsvp_counts = {}
+    for row in rows:
+        rsvp_counts[row['rsvp_id']] = rsvp_counts.get(row['rsvp_id'], 0) + 1
+    multi_guest_rsvp_ids = {rid for rid, count in rsvp_counts.items() if count > 1}
     stats = {
-        'submissions': db.execute('SELECT COUNT(*) FROM rsvps').fetchone()[0],
         'attending': db.execute("SELECT COUNT(*) FROM guests WHERE attending='yes'").fetchone()[0],
         'declined': db.execute("SELECT COUNT(*) FROM guests WHERE attending='no'").fetchone()[0],
+        'soup': db.execute("SELECT COUNT(*) FROM guests WHERE starter LIKE 'Canadian Lobster Bisque%'").fetchone()[0],
+        'salad': db.execute("SELECT COUNT(*) FROM guests WHERE starter LIKE 'Roasted Beets%'").fetchone()[0],
         'chicken': db.execute("SELECT COUNT(*) FROM guests WHERE main_course LIKE 'Pan Seared%'").fetchone()[0],
         'beef': db.execute("SELECT COUNT(*) FROM guests WHERE main_course LIKE 'Slow Roasted%'").fetchone()[0],
     }
-    return render_template('admin.html', rows=rows, stats=stats)
+    return render_template('admin.html', rows=rows, stats=stats,
+                           multi_guest_rsvp_ids=multi_guest_rsvp_ids,
+                           rsvp_counts=rsvp_counts)
 
 
 @app.route('/admin/rsvps/<int:rsvp_id>/delete', methods=['POST'])
