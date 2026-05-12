@@ -61,6 +61,7 @@ def close_db(_exc):
 
 def init_db():
     with sqlite3.connect(DB_PATH) as conn:
+        conn.execute('PRAGMA journal_mode=WAL')
         conn.executescript(SCHEMA_PATH.read_text())
 
 
@@ -77,6 +78,11 @@ def rehearsal():
 @app.route('/weddingparty')
 def wedding_party():
     return render_template('wedding_party.html')
+
+
+@app.route('/drinks')
+def drinks():
+    return render_template('drinks.html')
 
 
 def parse_guests(form):
