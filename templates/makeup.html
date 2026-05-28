@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Makeup Schedule · Dylan &amp; Steven</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="form-page">
+
+<div class="form-card form-card-mauve">
+  <div style="text-align: center;">
+    <div class="eyebrow">Dylan &amp; Steven</div>
+    <h1>Makeup Schedule</h1>
+  </div>
+</div>
+
+<div class="form-card">
+  <div class="section-head">
+    <div class="eyebrow">Saturday, August 8, 2026 &middot; The Ridge Okotoks</div>
+    <h2>Bride&rsquo;s Building</h2>
+    <div class="divider">&#10047;</div>
+  </div>
+  <div class="program program-wide">
+    <div class="program-row">
+      <div class="program-time">9:00 &ndash; 9:15 AM</div>
+      <div class="program-event">Setup Time</div>
+    </div>
+    <div class="program-row">
+      <div class="program-time">9:15 &ndash; 9:45 AM</div>
+      <div class="program-event">Bridesmaid 1 &mdash; Hair</div>
+    </div>
+    <div class="program-row">
+      <div class="program-time">9:45 &ndash; 10:15 AM</div>
+      <div class="program-event">Bridesmaid 2 &mdash; Hair</div>
+    </div>
+    <div class="program-row">
+      <div class="program-time">10:15 &ndash; 10:45 AM</div>
+      <div class="program-event">Bridesmaid 3 &mdash; Hair</div>
+    </div>
+    <div class="program-row">
+      <div class="program-time">10:45 AM &ndash; 12:45 PM</div>
+      <div class="program-event">Bride &mdash; Makeup &amp; Hair</div>
+    </div>
+    <div class="program-row">
+      <div class="program-time">12:45 &ndash; 1:00 PM</div>
+      <div class="program-event">Final Buffer &amp; Touch-Up</div>
+    </div>
+  </div>
+</div>
+
+<div class="form-card">
+  <div class="section-head">
+    <div class="eyebrow">Saturday, August 8, 2026 &middot; The Ridge Okotoks</div>
+    <h2>Groom&rsquo;s Building</h2>
+    <div class="divider">&#10047;</div>
+  </div>
+  <div class="program program-wide">
+    <div class="program-row">
+      <div class="program-time">9:00 &ndash; 9:15 AM</div>
+      <div class="program-event">Setup Time</div>
+    </div>
+    <div class="program-row">
+      <div class="program-time">9:15 &ndash; 9:45 AM</div>
+      <div class="program-event">Mother 1 &mdash; Hair</div>
+    </div>
+    <div class="program-row">
+      <div class="program-time">9:45 &ndash; 10:30 AM</div>
+      <div class="program-event">Mother 1 &mdash; Makeup</div>
+    </div>
+    <div class="program-row">
+      <div class="program-time">10:30 &ndash; 11:00 AM</div>
+      <div class="program-event">Mother 2 &mdash; Hair</div>
+    </div>
+    <div class="program-row">
+      <div class="program-time">11:00 &ndash; 11:45 AM</div>
+      <div class="program-event">Mother 2 &mdash; Makeup</div>
+    </div>
+    <div class="program-row">
+      <div class="program-time">11:45 AM &ndash; 12:15 PM</div>
+      <div class="program-event">Groom &mdash; Hair</div>
+    </div>
+    <div class="program-row">
+      <div class="program-time">12:15 &ndash; 1:00 PM</div>
+      <div class="program-event">Assist &amp; Overall Retouch</div>
+    </div>
+  </div>
+</div>
+
+<p style="text-align: center; margin-top: 2rem; font-size: .85rem;">
+  <a href="{{ url_for('index') }}" style="color: var(--muted); border: none;">&larr; Back to wedding site</a>
+</p>
+
+</body>
+</html>

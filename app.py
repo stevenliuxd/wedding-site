@@ -80,6 +80,11 @@ def wedding_party():
     return render_template('wedding_party.html')
 
 
+@app.route('/makeup')
+def makeup():
+    return render_template('makeup.html')
+
+
 @app.route('/drinks')
 def drinks():
     return render_template('drinks.html')
