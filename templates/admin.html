@@ -44,7 +44,6 @@
   </thead>
   <tbody>
     {% for row in rows %}
-    {% set is_first_in_group = loop.first or rows[loop.index0 - 1].rsvp_id != row.rsvp_id %}
     <tr{% if row.rsvp_id in multi_guest_rsvp_ids %} class="multi-guest"{% endif %}>
       <td>{{ row.submitted_at | mountain_time }}</td>
       <td>{{ row.full_name }}</td>
@@ -53,16 +52,14 @@
       <td>{{ row.main_course or '' }}</td>
       <td>{{ row.dietary or '' }}</td>
       <td>{{ row.message or '' }}</td>
-      {% if is_first_in_group %}
-      <td rowspan="{{ rsvp_counts[row.rsvp_id] }}" style="vertical-align: top;">
+      <td>
         <form method="post"
-              action="{{ url_for('admin_delete_rsvp', rsvp_id=row.rsvp_id) }}"
-              onsubmit="return confirm('Delete this entire RSVP submission and all its guests?');"
+              action="{{ url_for('admin_delete_guest', guest_id=row.guest_id) }}"
+              onsubmit="return confirm('Delete {{ row.full_name }}?');"
               style="margin: 0;">
           <button type="submit" class="btn btn-outline" style="padding: 0.25rem 0.6rem; font-size: 0.85rem;">Delete</button>
         </form>
       </td>
-      {% endif %}
     </tr>
     {% else %}
     <tr><td colspan="8" style="text-align: center; padding: 2rem; color: var(--muted);">No responses yet.</td></tr>

@@ -186,7 +186,7 @@ def admin():
     db = get_db()
     rows = db.execute(
         'SELECT r.id AS rsvp_id, r.submitted_at, r.message, '
-        '       g.full_name, g.attending, g.starter, g.main_course, g.dietary '
+        '       g.id AS guest_id, g.full_name, g.attending, g.starter, g.main_course, g.dietary '
         'FROM rsvps r JOIN guests g ON g.rsvp_id = r.id '
         'ORDER BY r.submitted_at DESC, r.id DESC, g.id ASC'
     ).fetchall()
@@ -212,6 +212,24 @@ def admin():
 def admin_delete_rsvp(rsvp_id):
     db = get_db()
     db.execute('DELETE FROM rsvps WHERE id = ?', (rsvp_id,))
+    db.commit()
+    return redirect(url_for('admin'))
+
+
+@app.route('/admin/guests/<int:guest_id>/delete', methods=['POST'])
+@require_admin
+def admin_delete_guest(guest_id):
+    db = get_db()
+    row = db.execute('SELECT rsvp_id FROM guests WHERE id = ?', (guest_id,)).fetchone()
+    if row is None:
+        return redirect(url_for('admin'))
+    rsvp_id = row['rsvp_id']
+    db.execute('DELETE FROM guests WHERE id = ?', (guest_id,))
+    remaining = db.execute(
+        'SELECT COUNT(*) FROM guests WHERE rsvp_id = ?', (rsvp_id,),
+    ).fetchone()[0]
+    if remaining == 0:
+        db.execute('DELETE FROM rsvps WHERE id = ?', (rsvp_id,))
     db.commit()
     return redirect(url_for('admin'))
 
