@@ -366,6 +366,11 @@ section.alt { background: var(--cream); }
 .program-wide .program-row { grid-column: 1 / -1; grid-template-columns: subgrid; gap: 1.5rem; }
 .program-wide .program-row:first-child { padding-top: 0; }
 .program-wide .program-time { white-space: nowrap; }
+@media (max-width: 640px) {
+  .program-wide { display: block; }
+  .program-wide .program-row { display: block; }
+  .program-wide .program-time { display: block; margin-bottom: 0.25rem; }
+}
 
 /* Buttons */
 .btn {
