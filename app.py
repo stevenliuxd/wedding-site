@@ -75,6 +75,11 @@ def rehearsal():
     return render_template('rehearsal.html')
 
 
+@app.route('/photographer')
+def photographer():
+    return render_template('photographer.html')
+
+
 @app.route('/weddingparty')
 def wedding_party():
     return render_template('wedding_party.html')
