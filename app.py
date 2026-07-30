@@ -43,6 +43,15 @@ def mountain_time(utc_str):
     return dt.astimezone(MOUNTAIN_TZ).strftime('%Y-%m-%d %H:%M %Z')
 
 
+@app.context_processor
+def inject_asset_version():
+    try:
+        version = int((BASE_DIR / 'static' / 'styles.css').stat().st_mtime)
+    except OSError:
+        version = 0
+    return {'asset_v': version}
+
+
 def get_db():
     if 'db' not in g:
         conn = sqlite3.connect(DB_PATH)
