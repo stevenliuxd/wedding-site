@@ -199,6 +199,10 @@ section.alt { background: var(--cream); }
   max-width: 720px;
   margin: 0 auto;
 }
+.countdown-grid.triple {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 560px;
+}
 .countdown-cell {
   border: 1px solid rgba(255,255,255,0.18);
   padding: 1.6rem .5rem;

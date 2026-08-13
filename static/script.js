@@ -1,30 +1,34 @@
-// Countdown to wedding day: 2026-08-08 15:30 (Mountain Time, UTC-06:00)
+// Years/months/days married since wedding day: 2026-08-08 15:30 (Mountain Time, UTC-06:00)
 (function () {
-  const target = new Date('2026-08-08T15:30:00-06:00').getTime();
+  const weddingDay = new Date('2026-08-08T15:30:00-06:00');
   const $ = (id) => document.getElementById(id);
-  const days = $('cd-days'), hours = $('cd-hours'), mins = $('cd-mins'), secs = $('cd-secs');
+  const years = $('cd-years'), months = $('cd-months'), days = $('cd-days');
   if (!days) return;
 
-  const pad = (n) => String(Math.max(0, n)).padStart(2, '0');
-
   function tick() {
-    const diff = target - Date.now();
-    if (diff <= 0) {
-      days.textContent = '00'; hours.textContent = '00';
-      mins.textContent = '00'; secs.textContent = '00';
-      return;
+    const now = new Date();
+    let y = now.getFullYear() - weddingDay.getFullYear();
+    let m = now.getMonth() - weddingDay.getMonth();
+    let d = now.getDate() - weddingDay.getDate();
+    if (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds() <
+        weddingDay.getHours() * 3600 + weddingDay.getMinutes() * 60 + weddingDay.getSeconds()) {
+      d--;
     }
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    days.textContent = pad(d);
-    hours.textContent = pad(h);
-    mins.textContent = pad(m);
-    secs.textContent = pad(s);
+    if (d < 0) {
+      m--;
+      d += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+    }
+    if (m < 0) {
+      y--;
+      m += 12;
+    }
+    y = Math.max(0, y); m = Math.max(0, m); d = Math.max(0, d);
+    if (years) years.textContent = String(y);
+    if (months) months.textContent = String(m);
+    days.textContent = String(d);
   }
   tick();
-  setInterval(tick, 1000);
+  setInterval(tick, 60000);
 })();
 
 // RSVP form: dynamic guest blocks and conditional menu sections
