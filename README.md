@@ -109,14 +109,16 @@ Visit `/admin` and authenticate with `ADMIN_USER` / `ADMIN_PASSWORD` from the sy
 
 ## Backups
 
-`scripts/backup-db.sh` runs nightly via cron and ships a compressed snapshot of `rsvps.db` to the NAS at `/mnt/nas-steven/Backups/wedding_site_bk/`.
+**Currently disabled** — the wedding is over and `rsvps.db` is no longer changing, so the cron job was removed. The info below documents how it was set up, in case backups ever need to be turned back on (e.g. `crontab -e` and re-add the entry).
+
+`scripts/backup-db.sh` shipped a compressed snapshot of `rsvps.db` to the NAS at `/mnt/nas-steven/Backups/wedding_site_bk/`.
 
 The script uses `sqlite3 .backup` (safe to run while the site is serving traffic) into a local tempdir, gzips, then copies the `.gz` to the NAS — going direct to CIFS doesn't work because SMB can't satisfy SQLite's file locking.
 
-Crontab entry:
+Crontab entry (as last deployed — every 30 minutes outside a 5-7am maintenance window):
 
 ```
-0 2 * * * /home/steven/code/wedding-site/scripts/backup-db.sh >> /home/steven/code/wedding-site/logs/backup-db.log 2>&1
+*/30 0-5,7-23 * * * /home/steven/code/wedding-site/scripts/backup-db.sh >> /home/steven/code/wedding-site/logs/backup-db.log 2>&1
 ```
 
 - **Output**: `rsvps_YYYYMMDD_HHMMSS.db.gz` on the NAS
